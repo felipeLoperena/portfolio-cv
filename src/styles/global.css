@@ -1,0 +1,314 @@
+/* ==========================================================================
+   Design system — tokens, base elements, primitives.
+   Limited palette: slate ink + a single azure accent. Light surface, dark hero.
+   ========================================================================== */
+
+:root {
+  /* Palette ---------------------------------------------------------------- */
+  --ink: #0b1220; /* near-black slate, primary text */
+  --ink-soft: #334155; /* secondary text */
+  --muted: #64748b; /* tertiary / captions */
+  --bg: #ffffff;
+  --surface: #f6f8fc; /* alternating section background */
+  --surface-2: #eef2f9; /* chips, subtle fills */
+  --border: #e4e9f2;
+  --border-strong: #d2dae8;
+
+  --accent: #2f64f0; /* azure — links, CTAs, highlights */
+  --accent-strong: #1d4ed8;
+  --accent-ink: #ffffff; /* text on accent */
+  --accent-soft: #eaf0ff; /* accent-tinted background */
+
+  /* Dark band (hero / footer) --------------------------------------------- */
+  --dark-bg: #0b1220;
+  --dark-bg-2: #111d36;
+  --dark-text: #e8edf7;
+  --dark-muted: #9fb0cc;
+  --dark-border: #233252;
+
+  /* Typography ------------------------------------------------------------- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo,
+    Consolas, monospace;
+
+  /* Fluid type scale */
+  --step--1: clamp(0.83rem, 0.78rem + 0.2vw, 0.92rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.08rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
+  --step-2: clamp(1.45rem, 1.3rem + 0.8vw, 1.9rem);
+  --step-3: clamp(1.85rem, 1.6rem + 1.3vw, 2.6rem);
+  --step-4: clamp(2.4rem, 1.9rem + 2.6vw, 4rem);
+
+  /* Spacing / layout ------------------------------------------------------- */
+  --container: 72rem;
+  --container-narrow: 56rem;
+  --gutter: clamp(1.1rem, 0.6rem + 2.5vw, 2.5rem);
+  --section-y: clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 22px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04),
+    0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 6px 24px -8px rgba(15, 23, 42, 0.18);
+  --shadow-lg: 0 20px 50px -20px rgba(15, 23, 42, 0.28);
+
+  --ring: 0 0 0 3px rgba(47, 100, 240, 0.35);
+}
+
+/* Reset -------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5.5rem; /* offset for sticky header on anchor jumps */
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: 6px;
+}
+
+/* Layout primitives -------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+.section--surface {
+  background: var(--surface);
+  border-block: 1px solid var(--border);
+}
+
+.section__head {
+  max-width: var(--container-narrow);
+  margin-bottom: clamp(1.75rem, 1rem + 2vw, 3rem);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  margin-bottom: 0.75rem;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.section__title {
+  font-size: var(--step-3);
+}
+
+.section__lead {
+  margin-top: 0.9rem;
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  max-width: 46ch;
+}
+
+/* Buttons ------------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--step-0);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease,
+    border-color 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--primary:hover {
+  background: var(--accent-strong);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--border-strong);
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+/* On dark backgrounds */
+.btn--on-dark.btn--ghost {
+  color: var(--dark-text);
+  border-color: var(--dark-border);
+}
+
+.btn--on-dark.btn--ghost:hover {
+  border-color: var(--dark-text);
+  color: #fff;
+}
+
+/* Chips / tags ------------------------------------------------------------- */
+.chip {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  font-size: var(--step--1);
+  font-weight: 500;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Cards -------------------------------------------------------------------- */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Accessibility helpers ---------------------------------------------------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  z-index: 1000;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+  text-decoration: none;
+}
+
+/* Icons -------------------------------------------------------------------- */
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  stroke-width: 2;
+}
+
+/* Motion preferences ------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

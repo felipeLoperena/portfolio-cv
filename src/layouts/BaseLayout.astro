@@ -1,0 +1,105 @@
+---
+import "../styles/global.css";
+import type { Locale } from "../data/profile";
+import { person, contact } from "../data/profile";
+import { ui } from "../data/i18n";
+import { withBase } from "../lib/paths";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const title = ui.meta.title[locale];
+const description = ui.meta.description[locale];
+
+const site = Astro.site ?? new URL("https://USERNAME.github.io");
+// Base-aware, absolute URLs (Astro.site is the origin only; `base` is added here).
+const enUrl = new URL(withBase(), site).href;
+const esUrl = new URL(withBase("es/"), site).href;
+const canonical = locale === "en" ? enUrl : esUrl;
+
+// Person structured data (JSON-LD) for rich search results.
+const personLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: person.name,
+  jobTitle: person.headline[locale],
+  description,
+  email: `mailto:${contact.email}`,
+  url: canonical,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Mexico City",
+    addressCountry: "MX",
+  },
+  knowsLanguage: ["es", "en"],
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Universidad Tecnológica de México (UNITEC)",
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "Seguros Inbursa — Grupo Financiero Inbursa",
+  },
+  knowsAbout: [
+    "Java",
+    "Spring Boot",
+    "Microservices",
+    "Spring Batch",
+    "SQL",
+    "Backend development",
+  ],
+};
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={person.name} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Language alternates -->
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="es" href={esUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === "en" ? "en_US" : "es_MX"} />
+    <meta
+      property="og:locale:alternate"
+      content={locale === "en" ? "es_MX" : "en_US"}
+    />
+    <meta property="og:site_name" content={person.name} />
+    <meta property="profile:first_name" content="Luis Felipe" />
+    <meta property="profile:last_name" content="Cortés Loperena" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="theme-color" content="#0b1220" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(personLd)}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,66 @@
+---
+import type { Locale } from "../data/profile";
+import { skillGroups } from "../data/profile";
+import { ui } from "../data/i18n";
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<section class="section section--surface" id="skills" aria-labelledby="skills-title">
+  <div class="container">
+    <SectionHeading
+      eyebrow={ui.nav.skills[locale]}
+      title={ui.sections.skills[locale]}
+      lead={ui.sectionLead.skills[locale]}
+      id="skills-title"
+    />
+
+    <div class="skills-grid">
+      {
+        skillGroups.map((group) => (
+          <article class="card skill-card">
+            <h3 class="skill-card__title">{group.title[locale]}</h3>
+            <ul class="chip-list">
+              {group.skills.map((s) => (
+                <li class="chip">{s}</li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .skill-card {
+    padding: 1.5rem;
+  }
+
+  .skill-card__title {
+    font-size: var(--step-1);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .skill-card__title::before {
+    content: "";
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 3px;
+    background: var(--accent);
+    flex: none;
+  }
+</style>

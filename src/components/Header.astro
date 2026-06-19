@@ -1,0 +1,233 @@
+---
+import type { Locale } from "../data/profile";
+import { person } from "../data/profile";
+import { ui } from "../data/i18n";
+import { withBase } from "../lib/paths";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const navItems = [
+  { href: "#about", label: ui.nav.about[locale] },
+  { href: "#skills", label: ui.nav.skills[locale] },
+  { href: "#experience", label: ui.nav.experience[locale] },
+  { href: "#projects", label: ui.nav.projects[locale] },
+  { href: "#education", label: ui.nav.education[locale] },
+  { href: "#contact", label: ui.nav.contact[locale] },
+];
+
+// Language toggle points to the other locale's home page (base-aware).
+const otherHref = locale === "en" ? withBase("es/") : withBase();
+const home = locale === "en" ? withBase() : withBase("es/");
+---
+
+<header class="site-header" id="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href={home} aria-label={person.name}>
+      <span class="brand__mark" aria-hidden="true">LC</span>
+      <span class="brand__name">{person.shortName}</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <button
+        class="nav__toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span class="visually-hidden">Menu</span>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <ul class="nav__menu" id="nav-menu">
+        {
+          navItems.map((item) => (
+            <li>
+              <a class="nav__link" href={item.href}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="nav__lang">
+          <a
+            class="nav__link nav__link--lang"
+            href={otherHref}
+            hreflang={locale === "en" ? "es" : "en"}
+          >
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path>
+            </svg>
+            {ui.labels.switchLang[locale]}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4.25rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .brand:hover {
+    text-decoration: none;
+  }
+
+  .brand__mark {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 9px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__menu {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .nav__link:hover {
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    text-decoration: none;
+  }
+
+  .nav__link--lang {
+    color: var(--ink);
+    font-weight: 600;
+    border: 1px solid var(--border-strong);
+    margin-left: 0.35rem;
+  }
+
+  .nav__toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .nav__toggle .icon {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  @media (max-width: 820px) {
+    .nav__toggle {
+      display: inline-flex;
+    }
+
+    .nav__menu {
+      position: absolute;
+      top: 100%;
+      right: var(--gutter);
+      left: var(--gutter);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.15rem;
+      padding: 0.6rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      transform-origin: top;
+      display: none;
+    }
+
+    .nav__menu.is-open {
+      display: flex;
+    }
+
+    .nav__link {
+      padding: 0.7rem 0.8rem;
+      font-size: var(--step-0);
+    }
+
+    .nav__link--lang {
+      margin-left: 0;
+      margin-top: 0.35rem;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // Progressive enhancement: mobile nav toggle + close on navigation.
+  const toggle = document.querySelector<HTMLButtonElement>(".nav__toggle");
+  const menu = document.getElementById("nav-menu");
+
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      menu.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    menu.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) setOpen(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+  }
+</script>

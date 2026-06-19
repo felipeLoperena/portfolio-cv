@@ -1,0 +1,32 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# environment
+.env
+.env.production
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# WSL / Windows artifacts
+*:Zone.Identifier
+
+# Raw source material & personal originals (not needed to build/run the site).
+# The site ships only the optimized photo (src/assets) and the CV (public/).
+# Remove this line if you want to track your source files in the repo.
+context/

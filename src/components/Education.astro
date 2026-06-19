@@ -1,0 +1,127 @@
+---
+import type { Locale } from "../data/profile";
+import { education, certifications, languages } from "../data/profile";
+import { ui } from "../data/i18n";
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<section class="section" id="education" aria-labelledby="education-title">
+  <div class="container">
+    <SectionHeading
+      eyebrow={ui.nav.education[locale]}
+      title={ui.sections.education[locale]}
+      id="education-title"
+    />
+
+    <div class="edu-grid">
+      <div class="edu-col">
+        <h3 class="edu-col__title">{ui.labels.education[locale]}</h3>
+        {
+          education.map((e) => (
+            <article class="card edu-item">
+              <h4 class="edu-item__title">{e.credential[locale]}</h4>
+              <p class="edu-item__meta">{e.institution}</p>
+              {e.period[locale] && (
+                <p class="edu-item__period">{e.period[locale]}</p>
+              )}
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="edu-col">
+        <h3 class="edu-col__title">{ui.labels.certifications[locale]}</h3>
+        {
+          certifications.map((c) => (
+            <article class="card edu-item">
+              <h4 class="edu-item__title">{c.title[locale]}</h4>
+              <p class="edu-item__meta">{c.issuer[locale]}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="edu-col">
+        <h3 class="edu-col__title">{ui.labels.languages[locale]}</h3>
+        <article class="card edu-item">
+          <ul class="lang-list">
+            {
+              languages.map((l) => (
+                <li class="lang-list__item">
+                  <span class="lang-list__name">{l.name[locale]}</span>
+                  <span class="lang-list__level">{l.level[locale]}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .edu-col__title {
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .edu-item {
+    padding: 1.4rem;
+  }
+
+  .edu-item + .edu-item {
+    margin-top: 1rem;
+  }
+
+  .edu-item__title {
+    font-size: var(--step-1);
+  }
+
+  .edu-item__meta {
+    margin-top: 0.4rem;
+    color: var(--ink-soft);
+  }
+
+  .edu-item__period {
+    margin-top: 0.3rem;
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+
+  .lang-list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.55rem;
+  }
+
+  .lang-list__item + .lang-list__item {
+    border-top: 1px solid var(--border);
+  }
+
+  .lang-list__name {
+    font-weight: 600;
+  }
+
+  .lang-list__level {
+    color: var(--muted);
+    font-size: var(--step--1);
+  }
+</style>

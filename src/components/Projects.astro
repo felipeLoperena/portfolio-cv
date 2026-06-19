@@ -1,0 +1,112 @@
+---
+import type { Locale } from "../data/profile";
+import { projects } from "../data/profile";
+import { ui } from "../data/i18n";
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+---
+
+<section class="section section--surface" id="projects" aria-labelledby="projects-title">
+  <div class="container">
+    <SectionHeading
+      eyebrow={ui.nav.projects[locale]}
+      title={ui.sections.projects[locale]}
+      lead={ui.sectionLead.projects[locale]}
+      id="projects-title"
+    />
+
+    <div class="projects-grid">
+      {
+        projects.map((project) => (
+          <article class="card project">
+            <div class="project__top">
+              <h3 class="project__title">{project.title[locale]}</h3>
+              {project.placeholder && (
+                <span class="project__flag" title="Editable placeholder">
+                  {ui.labels.editable[locale]}
+                </span>
+              )}
+            </div>
+
+            <p class="project__desc">{project.description[locale]}</p>
+
+            <ul class="chip-list project__tech">
+              {project.tech.map((t) => (
+                <li class="chip">{t}</li>
+              ))}
+            </ul>
+
+            {project.url && (
+              <a class="project__link" href={project.url}>
+                {ui.labels.viewProject[locale]}
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                  <path d="M7 17L17 7M17 7H8M17 7v9" />
+                </svg>
+              </a>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .project {
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .project__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .project__title {
+    font-size: var(--step-1);
+  }
+
+  .project__flag {
+    flex: none;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+  }
+
+  .project__desc {
+    color: var(--ink-soft);
+    font-size: var(--step-0);
+  }
+
+  .project__tech {
+    margin-top: auto;
+  }
+
+  .project__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import type { Locale } from "../data/profile";
+import { person } from "../data/profile";
+import { ui } from "../data/i18n";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <p class="footer__name">{person.name}</p>
+    <p class="footer__meta">
+      © {year} {person.shortName}. {ui.footer.rights[locale]}
+    </p>
+    <p class="footer__note">{ui.footer.builtWith[locale]}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--dark-bg);
+    color: var(--dark-muted);
+    border-top: 1px solid var(--dark-border);
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem 1.5rem;
+    padding-block: 2.25rem;
+  }
+
+  .footer__name {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .footer__meta {
+    font-size: var(--step--1);
+  }
+
+  .footer__note {
+    flex-basis: 100%;
+    font-size: var(--step--1);
+    color: var(--dark-border);
+  }
+</style>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LC">
+  <rect width="64" height="64" rx="14" fill="#0b1220"/>
+  <rect x="6" y="6" width="52" height="52" rx="11" fill="none" stroke="#2f64f0" stroke-width="2" opacity="0.5"/>
+  <text x="32" y="42" font-family="Inter, system-ui, sans-serif" font-size="28" font-weight="700" letter-spacing="-1" text-anchor="middle" fill="#ffffff">LC</text>
+</svg>
