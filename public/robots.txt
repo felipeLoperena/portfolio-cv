@@ -3,4 +3,4 @@ Allow: /
 
 # EDITABLE: must be the full, absolute sitemap URL including any base path.
 # Project page example: https://USERNAME.github.io/portfolio-cv/sitemap-index.xml
-Sitemap: https://USERNAME.github.io/portfolio-cv/sitemap-index.xml
+Sitemap: https://felipeloperena.github.io/portfolio-cv/sitemap-index.xml

@@ -11,7 +11,7 @@ import sitemap from "@astrojs/sitemap";
 //  Custom domain →  SITE = "https://your-domain.com",       BASE = "/"
 //
 // Currently configured for a PROJECT PAGE at <username>.github.io/portfolio-cv.
-const SITE = "https://USERNAME.github.io"; // EDITABLE: your GitHub username
+const SITE = "https://felipeloperena.github.io"; // EDITABLE: your GitHub username
 const BASE = "/portfolio-cv/"; // EDITABLE: repo name (project page) or "/" otherwise
 // ─────────────────────────────────────────────────────────────────────────────
 
