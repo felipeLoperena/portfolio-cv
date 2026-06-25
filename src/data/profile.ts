@@ -267,18 +267,18 @@ export const projects: ProjectItem[] = [
     url: null,
   },
   {
-    id: "your-next-project",
+    id: "truman-pos",
     title: {
-      en: "Your next project",
-      es: "Tu próximo proyecto",
+      en: "Truman POS — Point-of-sale system",
+      es: "Truman POS — Sistema de punto de venta",
     },
     description: {
-      en: "EDITABLE placeholder — replace with a personal or open-source project you want to showcase. Add a short description, the tech stack and a link to the repository or live demo.",
-      es: "Placeholder EDITABLE — reemplázalo con un proyecto personal o de código abierto que quieras mostrar. Agrega una breve descripción, el stack tecnológico y un enlace al repositorio o demo en vivo.",
+      en: "Full-stack point-of-sale built with Spring Boot, Thymeleaf and MySQL: in-browser cart and ticketing, inventory control, customer and supplier management, role-based auth (admin / cashier) and a metrics dashboard with daily and monthly charts. Includes a reporting module with date-range filters and CSV/PDF export.",
+      es: "Punto de venta full-stack construido con Spring Boot, Thymeleaf y MySQL: caja con carrito en el navegador y tickets, control de inventario, gestión de clientes y proveedores, autenticación por roles (administrador / cajero) y un dashboard de métricas con gráficas diarias y mensuales. Incluye un módulo de reportes con filtros por rango de fechas y exportación a CSV/PDF.",
     },
-    tech: ["TODO"],
-    placeholder: true,
-    url: null,
+    tech: ["Java 21", "Spring Boot", "MySQL", "Thymeleaf", "Chart.js", "Full-stack"],
+    placeholder: false,
+    url: "https://github.com/felipeLoperena/punto-venta",
   },
 ];
 
@@ -329,8 +329,8 @@ export const contact = {
   phone: "+52 55 2673 8948",
   phoneHref: "tel:+525526738948",
   // EDITABLE placeholders — replace "#" with your real profile URLs.
-  linkedin: "#", // e.g. https://www.linkedin.com/in/your-handle
-  github: "#", // e.g. https://github.com/your-handle
+  linkedin: "https://www.linkedin.com/in/luis-felipe-cort%C3%A9s-loperena-64790a17b/", // e.g. https://www.linkedin.com/in/your-handle
+  github: "https://github.com/felipeLoperena", // e.g. https://github.com/your-handle
   // Served from /public — see public/Luis-Felipe-Cortes-CV.pdf
   cvUrl: "/Luis-Felipe-Cortes-CV.pdf",
 } as const;
